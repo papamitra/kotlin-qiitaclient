@@ -2,6 +2,7 @@ package sample.qiitaclient
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.ListView
 import sample.qiitaclient.view.ArticleView
 import sample.qiitaclient.model.*
 
@@ -9,15 +10,19 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
 
-        val articleView = ArticleView(applicationContext)
+        val listAdapter = ArticleListAdapter(applicationContext)
+        listAdapter.articles = listOf(dummyArticle("Kotlin入門", "たろう"),
+                dummyArticle("Java入門", "じろう"))
 
-        articleView.setArticle(Article(id = "123",
-                title = "Kotlin入門",
-                url = "http://www.example.com/articles/123",
-                user = User(id = "456", name = "たろう", profileImageUrl = "")))
-
-        //setContentView(R.layout.activity_main)
-        setContentView(articleView)
+        val listView: ListView = findViewById<ListView>(R.id.list_view)
+        listView.adapter = listAdapter
     }
+
+    private fun dummyArticle(title: String, userName: String): Article =
+            Article(id = "",
+                    title = title,
+                    url = "http://kotlinlang.org",
+                    user = User(id = "", name = userName, profileImageUrl = ""))
 }
