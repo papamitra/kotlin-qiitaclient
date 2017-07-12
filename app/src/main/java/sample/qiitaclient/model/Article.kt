@@ -14,7 +14,9 @@ data class Article(val id: String,
         @JvmField
         val CREATOR: Parcelable.Creator<Article> = object : Parcelable.Creator<Article> {
             override fun createFromParcel(source: Parcel): Article = source.run {
-                Article(readString(), readString(), readString(), readParcelable(Article::class.java.classLoader))
+                val article = Article(readString(), readString(), readString(), readParcelable(User::class.java.classLoader))
+                println("Article: ${article}")
+                article
             }
 
             override fun newArray(size: Int): Array<Article?> = arrayOfNulls(size)
