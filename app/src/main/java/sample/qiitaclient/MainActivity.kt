@@ -7,6 +7,8 @@ import android.widget.EditText
 import android.widget.ListView
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
+import com.trello.rxlifecycle.components.support.RxAppCompatActivity
+import com.trello.rxlifecycle.kotlin.bindToLifecycle
 import retrofit2.Retrofit
 import retrofit2.Retrofit.*
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
@@ -17,7 +19,7 @@ import sample.qiitaclient.client.ArticleClient
 import sample.qiitaclient.view.ArticleView
 import sample.qiitaclient.model.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : RxAppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,6 +54,7 @@ class MainActivity : AppCompatActivity() {
             articleClient.search(queryEditText.text.toString())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
+                    .bindToLifecycle(this)
                     .subscribe({
                         queryEditText.text.clear()
                         listAdapter.articles = it
