@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file:///media/insight/TOSHIBA_1.0TB/work/AndroidStudioProjects/QiitaClient/QiitaClient.iml" filepath="/media/insight/TOSHIBA_1.0TB/work/AndroidStudioProjects/QiitaClient/QiitaClient.iml" />
-      <module fileurl="file:///media/insight/TOSHIBA_1.0TB/work/AndroidStudioProjects/QiitaClient/app/app.iml" filepath="/media/insight/TOSHIBA_1.0TB/work/AndroidStudioProjects/QiitaClient/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/kotlin-qiitaclient.iml" filepath="$PROJECT_DIR$/kotlin-qiitaclient.iml" />
     </modules>
   </component>
 </project>
