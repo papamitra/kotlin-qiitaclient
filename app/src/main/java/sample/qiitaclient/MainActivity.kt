@@ -2,9 +2,11 @@ package sample.qiitaclient
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ListView
+import android.widget.ProgressBar
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity
@@ -25,9 +27,12 @@ class MainActivity : RxAppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val listAdapter = ArticleListAdapter(applicationContext)
-
         val listView: ListView = findViewById<ListView>(R.id.listView)
+        val progressBar = findViewById<ProgressBar>(R.id.prograssBar)
+        val queryEditText = findViewById<EditText>(R.id.queryEditText)
+        val searchButton = findViewById<Button>(R.id.searchButton)
+
+        val listAdapter = ArticleListAdapter(applicationContext)
         listView.adapter = listAdapter
 
         listView.setOnItemClickListener{ adapterView, view, position, id ->
@@ -47,13 +52,15 @@ class MainActivity : RxAppCompatActivity() {
 
         val articleClient = retrofit.create(ArticleClient::class.java)
 
-        val queryEditText = findViewById<EditText>(R.id.queryEditText)
-        val searchButton = findViewById<Button>(R.id.searchButton)
-
         searchButton.setOnClickListener{
+            progressBar.visibility = View.VISIBLE
+
             articleClient.search(queryEditText.text.toString())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
+                    .doAfterTerminate {
+                        progressBar.visibility = View.GONE
+                    }
                     .bindToLifecycle(this)
                     .subscribe({
                         queryEditText.text.clear()
